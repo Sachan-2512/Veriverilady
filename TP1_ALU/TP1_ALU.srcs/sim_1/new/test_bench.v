@@ -2,10 +2,13 @@
 
 module test_bench;
 
-  // Parámetros
+  // Parametros
   parameter NB_DATA   = 8;
   parameter NB_OPCODE = 6;
   parameter NB_BUTTON = 3;
+
+  // Cantidad de iteraciones aleatorias por operacion
+  parameter NUM_TESTS = 1;
 
   // Entradas del top
   reg clk;
@@ -20,13 +23,11 @@ module test_bench;
   // Valores utilizados por el testbench
   reg [NB_DATA-1:0]   A_data;
   reg [NB_DATA-1:0]   B_data;
-  reg [NB_OPCODE-1:0] OP;
   reg [NB_DATA-1:0]   expected;
 
   integer i;
 
   // Instancia del top_module
-
   top_module #(
     .NB_DATA(NB_DATA),
     .NB_OPCODE(NB_OPCODE),
@@ -39,23 +40,65 @@ module test_bench;
     .leds(leds)
   );
 
-
-  // Generación del clock
-
+  // Generacion del clock
   initial begin
     clk = 0;
     forever #5 clk = ~clk;
   end
 
-  // Pruebas
+  task run_test(
+    input [NB_OPCODE-1:0] op,
+    input [NB_DATA-1:0]   op_a,
+    input [NB_DATA-1:0]   op_b,
+    input [NB_DATA-1:0]   exp_result
+  );
+    begin
+      // Cargo A
+      switches   = op_a;
+      buttons[0] = 1;
+      #10;
+      buttons[0] = 0;
+      #10;
 
+      // Cargo B
+      switches   = op_b;
+      buttons[1] = 1;
+      #10;
+      buttons[1] = 0;
+      #10;
+
+      // Cargo OP
+      switches   = op;
+      buttons[2] = 1;
+      #10;
+      buttons[2] = 0;
+      #10;
+
+      // Espero propagacion del resultado
+      #10;
+
+      // Verificacion
+      if (leds === exp_result)
+        $display(
+          "OK: A=%d (%b) B=%d (%b) result=%d (%b)",
+          op_a, op_a, op_b, op_b, leds, leds
+        );
+      else
+        $display(
+          "ERROR: A=%d (%b) B=%d (%b) expected=%d (%b) result=%d (%b)",
+          op_a, op_a, op_b, op_b, exp_result, exp_result, leds, leds
+        );
+    end
+  endtask
+
+  // Pruebas
   initial begin
 
     switches = 0;
     buttons  = 0;
     reset    = 0;
 
-  // Testeamos reset
+    // Testeamos reset
     reset = 1;
     #10;
 
@@ -63,539 +106,76 @@ module test_bench;
     #10;
 
     // 1) ADD
-
     $display("\nTesting Operation: 'ADD'");
-
-    OP = 6'b100000;
-
-    for (i = 0; i < 10; i = i + 1) begin
-
-      // Genero valores aleatorios
+    for (i = 0; i < NUM_TESTS; i = i + 1) begin
       A_data = $random;
       B_data = $random;
-
-      // Cargo A
-
-      switches = A_data;
-      buttons[0] = 1;
-      #10;
-      buttons[0] = 0;
-      #10;
-      
-      // Cargo B
-
-      switches = B_data;
-      buttons[1] = 1;
-      #10;
-      buttons[1] = 0;
-      #10;
-
-
-      switches = OP;
-
-      buttons[2] = 1;
-      #10;
-
-      buttons[2] = 0;
-      #10;
-
-      // Resultado esperado
-
       expected = A_data + B_data;
-
-      #10;
-
-      // Verificacion
-
-      if (leds === expected)
-
-        $display(
-          "OK: A=%d (%b) B=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          leds, leds
-        );
-
-      else
-
-        $display(
-          "ERROR: A=%d (%b) B=%d (%b) expected=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          expected, expected,
-          leds, leds
-        );
-
+      run_test(6'b100000, A_data, B_data, expected);
     end
- 
+
     // 2) SUB
-
     $display("\nTesting Operation: 'SUB'");
-
-    OP = 6'b100010;
-
-    for (i = 0; i < 10; i = i + 1) begin
-
-      // Genero valores aleatorios
+    for (i = 0; i < NUM_TESTS; i = i + 1) begin
       A_data = $random;
       B_data = $random;
-
-      // Cargo A
-
-      switches = A_data;
-      buttons[0] = 1;
-      #10;
-      buttons[0] = 0;
-      #10;
-      
-      // Cargo B
-
-      switches = B_data;
-      buttons[1] = 1;
-      #10;
-      buttons[1] = 0;
-      #10;
-
-
-      switches = OP;
-
-      buttons[2] = 1;
-      #10;
-
-      buttons[2] = 0;
-      #10;
-
-      // Resultado esperado
-
       expected = A_data - B_data;
-
-      #10;
-
-      // Verificacion
-
-      if (leds === expected)
-
-        $display(
-          "OK: A=%d (%b) B=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          leds, leds
-        );
-
-      else
-
-        $display(
-          "ERROR: A=%d (%b) B=%d (%b) expected=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          expected, expected,
-          leds, leds
-        );
-
+      run_test(6'b100010, A_data, B_data, expected);
     end
 
-    
     // 3) AND
-
     $display("\nTesting Operation: 'AND'");
-
-    OP = 6'b100100;
-
-    for (i = 0; i < 10; i = i + 1) begin
-
-      // Genero valores aleatorios
+    for (i = 0; i < NUM_TESTS; i = i + 1) begin
       A_data = $random;
       B_data = $random;
-
-      // Cargo A
-
-      switches = A_data;
-      buttons[0] = 1;
-      #10;
-      buttons[0] = 0;
-      #10;
-      
-      // Cargo B
-
-      switches = B_data;
-      buttons[1] = 1;
-      #10;
-      buttons[1] = 0;
-      #10;
-
-
-      switches = OP;
-
-      buttons[2] = 1;
-      #10;
-
-      buttons[2] = 0;
-      #10;
-
-      // Resultado esperado
-
       expected = A_data & B_data;
-
-      #10;
-
-      // Verificacion
-
-      if (leds === expected)
-
-        $display(
-          "OK: A=%d (%b) B=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          leds, leds
-        );
-
-      else
-
-        $display(
-          "ERROR: A=%d (%b) B=%d (%b) expected=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          expected, expected,
-          leds, leds
-        );
-
+      run_test(6'b100100, A_data, B_data, expected);
     end
 
-    
     // 4) OR
-
     $display("\nTesting Operation: 'OR'");
-
-    OP = 6'b100101;
-
-    for (i = 0; i < 10; i = i + 1) begin
-
-      // Genero valores aleatorios
+    for (i = 0; i < NUM_TESTS; i = i + 1) begin
       A_data = $random;
       B_data = $random;
-
-      // Cargo A
-
-      switches = A_data;
-      buttons[0] = 1;
-      #10;
-      buttons[0] = 0;
-      #10;
-      
-      // Cargo B
-
-      switches = B_data;
-      buttons[1] = 1;
-      #10;
-      buttons[1] = 0;
-      #10;
-
-
-      switches = OP;
-
-      buttons[2] = 1;
-      #10;
-
-      buttons[2] = 0;
-      #10;
-
-      // Resultado esperado
-
       expected = A_data | B_data;
-
-      #10;
-
-      // Verificacion
-
-      if (leds === expected)
-
-        $display(
-          "OK: A=%d (%b) B=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          leds, leds
-        );
-
-      else
-
-        $display(
-          "ERROR: A=%d (%b) B=%d (%b) expected=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          expected, expected,
-          leds, leds
-        );
-
+      run_test(6'b100101, A_data, B_data, expected);
     end
 
-    
     // 5) XOR
-
     $display("\nTesting Operation: 'XOR'");
-
-    OP = 6'b100110;
-
-    for (i = 0; i < 10; i = i + 1) begin
-
-      // Genero valores aleatorios
+    for (i = 0; i < NUM_TESTS; i = i + 1) begin
       A_data = $random;
       B_data = $random;
-
-      // Cargo A
-
-      switches = A_data;
-      buttons[0] = 1;
-      #10;
-      buttons[0] = 0;
-      #10;
-      
-      // Cargo B
-
-      switches = B_data;
-      buttons[1] = 1;
-      #10;
-      buttons[1] = 0;
-      #10;
-
-
-      switches = OP;
-
-      buttons[2] = 1;
-      #10;
-
-      buttons[2] = 0;
-      #10;
-
-      // Resultado esperado
-
       expected = A_data ^ B_data;
-
-      #10;
-
-      // Verificacion
-
-      if (leds === expected)
-
-        $display(
-          "OK: A=%d (%b) B=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          leds, leds
-        );
-
-      else
-
-        $display(
-          "ERROR: A=%d (%b) B=%d (%b) expected=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          expected, expected,
-          leds, leds
-        );
-
+      run_test(6'b100110, A_data, B_data, expected);
     end
 
-    
     // 6) SRA
-
     $display("\nTesting Operation: 'SRA'");
-
-    OP = 6'b000011;
-
-    for (i = 0; i < 10; i = i + 1) begin
-
-      // Genero valores aleatorios
+    for (i = 0; i < NUM_TESTS; i = i + 1) begin
       A_data = $random;
-      B_data = $random;
-
-      // Cargo A
-
-      switches = A_data;
-      buttons[0] = 1;
-      #10;
-      buttons[0] = 0;
-      #10;
-      
-      // Cargo B
-
-      switches = B_data;
-      buttons[1] = 1;
-      #10;
-      buttons[1] = 0;
-      #10;
-
-
-      switches = OP;
-
-      buttons[2] = 1;
-      #10;
-
-      buttons[2] = 0;
-      #10;
-
-      // Resultado esperado
-
+      B_data = $random % NB_DATA;   // <-- acoto el shift a 0-7
       expected = $signed(A_data) >>> B_data;
-
-      #10;
-
-      // Verificacion
-
-      if (leds === expected)
-
-        $display(
-          "OK: A=%d (%b) B=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          leds, leds
-        );
-
-      else
-
-        $display(
-          "ERROR: A=%d (%b) B=%d (%b) expected=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          expected, expected,
-          leds, leds
-        );
-
+      run_test(6'b000011, A_data, B_data, expected);
     end
-
     
     // 7) SRL
-
     $display("\nTesting Operation: 'SRL'");
-
-    OP = 6'b000010;
-
-    for (i = 0; i < 10; i = i + 1) begin
-
-      // Genero valores aleatorios
+    for (i = 0; i < NUM_TESTS; i = i + 1) begin
       A_data = $random;
-      B_data = $random;
-
-      // Cargo A
-
-      switches = A_data;
-      buttons[0] = 1;
-      #10;
-      buttons[0] = 0;
-      #10;
-      
-      // Cargo B
-
-      switches = B_data;
-      buttons[1] = 1;
-      #10;
-      buttons[1] = 0;
-      #10;
-
-
-      switches = OP;
-
-      buttons[2] = 1;
-      #10;
-
-      buttons[2] = 0;
-      #10;
-
-      // Resultado esperado
-
+      B_data = $random % NB_DATA;   // <-- acoto el shift a 0-7
       expected = A_data >> B_data;
-
-      #10;
-
-      // Verificacion
-
-      if (leds === expected)
-
-        $display(
-          "OK: A=%d (%b) B=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          leds, leds
-        );
-
-      else
-
-        $display(
-          "ERROR: A=%d (%b) B=%d (%b) expected=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          expected, expected,
-          leds, leds
-        );
-
+      run_test(6'b000010, A_data, B_data, expected);
     end
 
-    
     // 8) NOR
-
     $display("\nTesting Operation: 'NOR'");
-
-    OP = 6'b100111;
-
-    for (i = 0; i < 10; i = i + 1) begin
-
-      // Genero valores aleatorios
+    for (i = 0; i < NUM_TESTS; i = i + 1) begin
       A_data = $random;
       B_data = $random;
-
-      // Cargo A
-
-      switches = A_data;
-      buttons[0] = 1;
-      #10;
-      buttons[0] = 0;
-      #10;
-      
-      // Cargo B
-
-      switches = B_data;
-      buttons[1] = 1;
-      #10;
-      buttons[1] = 0;
-      #10;
-
-
-      switches = OP;
-
-      buttons[2] = 1;
-      #10;
-
-      buttons[2] = 0;
-      #10;
-
-      // Resultado esperado
-
       expected = ~(A_data | B_data);
-
-      #10;
-
-      // Verificacion
-
-      if (leds === expected)
-
-        $display(
-          "OK: A=%d (%b) B=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          leds, leds
-        );
-
-      else
-
-        $display(
-          "ERROR: A=%d (%b) B=%d (%b) expected=%d (%b) result=%d (%b)",
-          A_data, A_data,
-          B_data, B_data,
-          expected, expected,
-          leds, leds
-        );
-
+      run_test(6'b100111, A_data, B_data, expected);
     end
-
 
     $finish;
 
