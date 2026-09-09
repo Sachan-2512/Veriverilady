@@ -173,7 +173,7 @@ La diferencia temporal entre el resultado `expected` y la salida `leds` que pued
 
 Una prueba se considera exitosa cuando `leds` coincide bit a bit con `expected`. Para documentar el resultado completo, la simulación debe mostrar una comparación exitosa para cada una de las ocho operaciones y no debe contener mensajes `ERROR`.
 
-Para ver mas detalles sobre las pruebas de ejecución y salidas por consola: **[Testbench-TP1](./Testbench-TP1.pdf)**
+Para ver mas detalles sobre las pruebas de ejecución y salidas por consola: **[Testbench-TP1](Testbench-TP1.md)**
 
 
 ## Consideraciones y limitaciones
