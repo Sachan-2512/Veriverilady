@@ -58,8 +58,8 @@ Cuando el opcode no coincide con ninguna operación válida, la salida toma el v
 El mismo bus de ocho switches se reutiliza para ingresar los dos operandos y la operación. Cada valor se almacena en un registro diferente mediante un pulsador. Los registros alimentan permanentemente a la ALU y el resultado combinacional se conecta a los LEDs.
 
 <p align="center">
-    <img src="./img/TP1-arquitectura-basys3.png"><br>
-    <em>Fig 1. Esquematico del analisis RTL.</em>
+    <img src="img/TP1-arquitectura-basys3.png"><br>
+    <em>Fig 2. Switches, leds, pulsadores y clock utilizados.</em>
 </p>
 
 
@@ -108,7 +108,7 @@ Los registros se actualizan en el flanco ascendente de `clk` mediante asignacion
 Al cargar el opcode sólo se utilizan los seis switches menos significativos. Los switches 6 y 7 no intervienen en esta carga.
 
 <p align="center">
-    <img src="./img/TP1-basys3-controles.png"><br>
+    <img src="img/TP1-basys3-controles.png"><br>
     <em>Fig 2. Switches, leds, pulsadores y clock utilizados.</em>
 </p>
 
@@ -148,7 +148,7 @@ describe un clock con período de 10 ns, equivalente a 100 MHz, y un ciclo de tr
 | 7 | W13 | V14 |
 
 <p align="center">
-    <img src="./img/TP1-constraints-basys3.png"><br>
+    <img src="img/TP1-constraints-basys3.png"><br>
     <em>Fig 3. Configuración de Constraints.</em>
 </p>
 
