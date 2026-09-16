@@ -59,7 +59,7 @@ El mismo bus de ocho switches se reutiliza para ingresar los dos operandos y la 
 
 <p align="center">
     <img src="img/TP1-arquitectura-basys3.png"><br>
-    <em>Fig 2. Switches, leds, pulsadores y clock utilizados.</em>
+    <em>Fig 1. Esquematico del analisis RTL.</em>
 </p>
 
 
