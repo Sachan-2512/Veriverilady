@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2024.2 (64-bit)
+# SW Build 5239630 on Fri Nov 08 22:34:34 MST 2024
+# IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
+# SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
+# Start of session at: Fri Sep  4 20:08:02 2026
+# Process ID         : 144065
+# Current directory  : /home/saqib/Desktop/Veriverilady/TP1_ALU/TP1_ALU.runs/synth_1
+# Command line       : vivado -log top_module.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top_module.tcl
+# Log file           : /home/saqib/Desktop/Veriverilady/TP1_ALU/TP1_ALU.runs/synth_1/top_module.vds
+# Journal file       : /home/saqib/Desktop/Veriverilady/TP1_ALU/TP1_ALU.runs/synth_1/vivado.jou
+# Running On         : saqibdaniel
+# Platform           : Linuxmint
+# Operating System   : Linux Mint 22.1
+# Processor Detail   : AMD E2-7110 APU with AMD Radeon R2 Graphics
+# CPU Frequency      : 1631.416 MHz
+# CPU Physical cores : 4
+# CPU Logical cores  : 4
+# Host memory        : 7212 MB
+# Swap memory        : 2147 MB
+# Total Virtual      : 9360 MB
+# Available Virtual  : 1165 MB
+#-----------------------------------------------------------
+source top_module.tcl -notrace
