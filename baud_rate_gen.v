@@ -11,9 +11,8 @@ module baud_rate_gen #(
 );
 
   // Cantidad de ciclos de clock entre ticks
-  // localparam CICLOS_PER_TICK = (CLK_FREQ + (BAUD_RATE * OVERSAMPLING)/2) / (BAUD_RATE * OVERSAMPLING);
-  // localparam CICLOS_PER_TICK = (CLK_FREQ) / (BAUD_RATE * OVERSAMPLING);
-  localparam CICLOS_PER_TICK = 163;  
+  localparam CICLOS_PER_TICK = (CLK_FREQ) / (BAUD_RATE * OVERSAMPLING);
+  //localparam CICLOS_PER_TICK = 163;  
   
   // Cantidad de bits necesarios para el contador
   localparam COUNTER_WIDTH = $clog2(CICLOS_PER_TICK);
