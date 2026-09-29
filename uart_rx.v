@@ -27,6 +27,10 @@ module uart_rx #(
   reg [3:0] tick_count;
   reg [2:0] bit_count;
   reg [NB_DATA-1:0] data_reg;
+
+  // Sincronizador de 2 etapas para entrada asincrona rx
+  reg rx_sync_0;
+  reg rx_sync;
   
   // Condicionales
   wire mid_tick = (tick_count == 4'd7);
@@ -51,6 +55,18 @@ module uart_rx #(
     .state(state)
   );
   
+  // Sincronizador de 2 flip-flops
+  always @(posedge clk) begin
+    if(reset) begin
+      rx_sync_0 <= 1'b1;
+      rx_sync <= 1'b1;
+    end
+    else begin
+      rx_sync_0 <= rx;
+      rx_sync <= rx_sync_0;
+    end
+  end
+
   // Logica de Estados Combinacional
   always @(*) begin
     // Valores por defecto
@@ -62,13 +78,13 @@ module uart_rx #(
     bit_inc = 1'b0;     
     shift_data = 1'b0;
     
-    rx_done = 0;
+    rx_done = 1'b0;
     
     case (state) 
       
       // IDLE
       IDLE: begin
-        if(!rx) begin
+        if(!rx_sync) begin
           next_state = START;
           tick_clear = 1'b1;
         end
@@ -125,13 +141,9 @@ module uart_rx #(
       default: begin
         next_state = IDLE;
       end
-      
     endcase
-      
   end
-  
-  
-  
+
   // Datapath
   always @(posedge clk) begin
     if(reset) begin
@@ -139,7 +151,7 @@ module uart_rx #(
       bit_count <= 0;
       data_reg <= 0;
     end
-    
+
     else begin
       if (tick_clear) begin
         tick_count <= 0;
@@ -156,7 +168,7 @@ module uart_rx #(
       end
       
       if(shift_data) begin
-        data_reg <= {rx,data_reg[NB_DATA-1:1]};
+        data_reg <= {rx_sync, data_reg[NB_DATA-1:1]};
       end
     end
   end
@@ -165,5 +177,3 @@ module uart_rx #(
   assign data_out = data_reg;
   
 endmodule
-
-
