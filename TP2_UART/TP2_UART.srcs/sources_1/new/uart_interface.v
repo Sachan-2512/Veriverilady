@@ -1,4 +1,3 @@
-// Code your design here
 `timescale 1ns / 1ps
 module uart_interface #(
   parameter NB_DATA = 8,
@@ -226,16 +225,3 @@ module uart_interface #(
    
   
 endmodule
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module top_module_tb;
+module top_tb;
 
     // ==========================================
     // Parámetros
@@ -16,7 +16,10 @@ module top_module_tb;
     // Tu baud_rate_gen actual usa 163 fijo
     localparam CYCLES_PER_TICK = 163;
 
-    // Clock de 50 MHz => 20 ns
+    // Clock de entrada del top (entrada del clk_wiz_0): 100 MHz => 10 ns
+    localparam CLK_IN_PERIOD = 10;
+
+    // Clock interno (salida del clk_wiz_0): 50 MHz => 20 ns
     localparam CLK_PERIOD = 20;
 
     // Un bit UART dura 16 ticks
@@ -48,7 +51,7 @@ module top_module_tb;
     // DUT
     // ==========================================
 
-    top_module #(
+    top #(
         .NB_DATA(NB_DATA),
         .NB_OPCODE(NB_OPCODE),
         .CLK_FREQ(CLK_FREQ),
@@ -63,12 +66,12 @@ module top_module_tb;
 
 
     // ==========================================
-    // Generación del clock
+    // Generación del clock (100 MHz hacia el wizard)
     // ==========================================
 
     initial begin
         clk = 0;
-        forever #(CLK_PERIOD/2)
+        forever #(CLK_IN_PERIOD/2)
             clk = ~clk;
     end
 
@@ -232,11 +235,13 @@ module top_module_tb;
         // RESET
         // ======================================
 
-        #(10 * CLK_PERIOD);
+        // Esperamos a que el clk_wiz_0 entregue el clock de 50 MHz
+        @(posedge DUT.clk_50MHz);
+        repeat (20) @(posedge DUT.clk_50MHz);
 
         reset = 1'b0;
 
-        #(10 * CLK_PERIOD);
+        repeat (10) @(posedge DUT.clk_50MHz);
 
 
         $display("");

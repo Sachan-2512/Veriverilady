@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module top_module #(
+module top #(
   parameter NB_DATA = 8,
   parameter NB_OPCODE = 6,
   parameter CLK_FREQ = 50000000,
@@ -14,6 +14,9 @@ module top_module #(
   // Salida tx
   output wire tx
 );
+
+  wire clk_50MHz;   // reloj derivado del clk_wiz_0
+  
   // BAUD_RATE_GENERATOR
   wire tick;
   
@@ -34,14 +37,20 @@ module top_module #(
   // ALU -> INTERFACE
   wire [NB_DATA-1:0] alu_result;
   
-  
+  // 0) A partir del clk de entrada de 100 MHz genero el clk a la salida de 50 MHz
+  clk_wiz_0 CLK_WIZ_50MHz
+  (
+  .clk_50MHz(clk_50MHz),     // output clk_50MHz
+  .clk_100MHz(clk)          // input clk_100MHz
+  );
+
   // 1) Instancio baud_rate_generator
   baud_rate_gen #(
     .CLK_FREQ(CLK_FREQ),
     .OVERSAMPLING(OVERSAMPLING),
     .BAUD_RATE(BAUD_RATE)
   ) BAUD_RATE_GEN (
-    .clk(clk),
+    .clk(clk_50MHz),
     .reset(reset),
     .tick(tick)
   );
@@ -51,7 +60,7 @@ module top_module #(
   uart_rx #(
     .NB_DATA(NB_DATA)
   ) UART_RX (
-    .clk(clk),
+    .clk(clk_50MHz),
     .reset(reset),
     .rx(rx),
     .tick(tick),
@@ -64,7 +73,7 @@ module top_module #(
     .NB_DATA(NB_DATA),
     .NB_OPCODE(NB_OPCODE)
   ) UART_INTERFACE (
-    .clk(clk),
+    .clk(clk_50MHz),
     .reset(reset),
     .rx_done(rx_done),
     .rx_data(rx_data),
@@ -78,7 +87,7 @@ module top_module #(
   );
     
   // 4) Instancio ALU
-  tp1_alu #(
+  alu #(
     .NB_DATA(NB_DATA),
     .NB_OPCODE(NB_OPCODE)
   ) ALU (
@@ -93,7 +102,7 @@ module top_module #(
   uart_tx #(
     .NB_DATA(NB_DATA)
   ) UART_TX (
-    .clk(clk),
+    .clk(clk_50MHz),
     .reset(reset),
     .tx_start(tx_start),
     .tx_data(tx_data),

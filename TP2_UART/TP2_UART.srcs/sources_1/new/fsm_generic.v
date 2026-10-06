@@ -1,4 +1,3 @@
-// Code your design here
 `timescale 1ns / 1ps
 module fsm_generic #(
   parameter STATE_WIDTH = 2,

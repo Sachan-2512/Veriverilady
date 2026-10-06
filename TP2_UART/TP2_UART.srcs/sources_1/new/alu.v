@@ -1,13 +1,13 @@
 `timescale 1ns / 1ps
 
-module tp1_alu#(
+module alu#(
     parameter NB_DATA = 8,
     parameter NB_OPCODE = 6
   )(
-  input wire [NB_DATA - 1:0] A_data,
-  input wire [NB_DATA - 1:0] B_data,
+  input wire [  NB_DATA - 1:0] A_data,
+  input wire [  NB_DATA - 1:0] B_data,
   input wire [NB_OPCODE - 1:0] OP_data,
-  output reg [NB_DATA - 1:0] result
+  output reg [  NB_DATA - 1:0] result
 );
   always@(*) begin
     result = 0;
