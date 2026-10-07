@@ -1,0 +1,305 @@
+<mxfile host="65bd71144e" compressed="false">
+    <diagram id="uart-clock-reset-tick" name="Clock, reset y tick">
+        <mxGraphModel dx="1083" dy="640" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="clock-panel" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FAFAFC;strokeColor=#30364D;strokeWidth=2;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=12;" value="Distribucion de clock y tick dentro de top" vertex="1">
+                    <mxGeometry height="390" width="1300" x="250" y="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-panel" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FAFAFC;strokeColor=#30364D;strokeWidth=2;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=12;" value="Generacion y distribucion de reset_50MHz" vertex="1">
+                    <mxGeometry height="390" width="1300" x="250" y="460" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-source" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#4B5563;strokeWidth=2;fontSize=14;" value="&lt;b&gt;Clock de placa&lt;/b&gt;&lt;br&gt;100 MHz" vertex="1">
+                    <mxGeometry height="80" width="180" x="20" y="105" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-source-port" parent="clock-source" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#30364D;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="1" y="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="clock-wizard" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#EEF1F5;strokeColor=#4B5563;strokeWidth=2;fontSize=14;" value="&lt;b&gt;Clocking Wizard&lt;/b&gt;&lt;br&gt;PLL: 100 MHz a 50 MHz" vertex="1">
+                    <mxGeometry height="110" width="200" x="320" y="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="wizard-clock-in" parent="clock-wizard" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#30364D;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" y="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wizard-clock-out" parent="clock-wizard" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#30364D;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="1" y="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wizard-locked-out" parent="clock-wizard" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#A62C68;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="0.25" y="1" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="clock-baud" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#F0EAFB;strokeColor=#6D4C9A;strokeWidth=2;fontSize=14;" value="&lt;b&gt;BaudRateGen&lt;/b&gt;&lt;br&gt;Genera tick 16x" vertex="1">
+                    <mxGeometry height="100" width="180" x="580" y="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-port-baud" parent="clock-baud" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#30364D;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="tick-port-baud" parent="clock-baud" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#16867A;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="1" y="0.65" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="clock-rx" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#E8F1FB;strokeColor=#2F5D8A;strokeWidth=2;fontSize=14;" value="&lt;b&gt;UART_RX&lt;/b&gt;&lt;br&gt;Muestrea la entrada" vertex="1">
+                    <mxGeometry height="100" width="180" x="820" y="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-port-rx" parent="clock-rx" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#30364D;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="tick-port-rx" parent="clock-rx" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#16867A;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" y="0.65" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="clock-interface" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFF4CC;strokeColor=#8A6D1D;strokeWidth=2;fontSize=14;" value="&lt;b&gt;UART_INTERFACE&lt;/b&gt;&lt;br&gt;Registra y controla" vertex="1">
+                    <mxGeometry height="100" width="210" x="1040" y="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-port-interface" parent="clock-interface" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#30364D;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="clock-tx" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FCE8EF;strokeColor=#8F3B5D;strokeWidth=2;fontSize=14;" value="&lt;b&gt;UART_TX&lt;/b&gt;&lt;br&gt;Temporiza la salida" vertex="1">
+                    <mxGeometry height="100" width="180" x="1310" y="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-port-tx" parent="clock-tx" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#30364D;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="tick-port-tx" parent="clock-tx" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#16867A;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="0.5" y="1" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="wizard-note" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9CA3AF;dashed=1;fontSize=12;fontColor=#4B5563;" value="El Clocking Wizard no recibe el reset funcional." vertex="1">
+                    <mxGeometry height="45" width="260" x="600" y="165" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-source" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#4B5563;strokeWidth=2;fontSize=14;" value="&lt;b&gt;Boton de reset&lt;/b&gt;&lt;br&gt;Activo en alto" vertex="1">
+                    <mxGeometry height="80" width="180" x="20" y="490" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-source-port" parent="reset-source" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#A62C68;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="1" y="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="reset-request" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FCE8EF;strokeColor=#A62C68;strokeWidth=2;fontSize=14;" value="&lt;b&gt;RESET REQUEST&lt;/b&gt;&lt;br&gt;reset OR NOT locked" vertex="1">
+                    <mxGeometry height="100" width="240" x="350" y="500" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-request-reset-in" parent="reset-request" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#A62C68;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" y="0.3" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="reset-request-locked-in" parent="reset-request" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#A62C68;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="0.083333" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="reset-request-out" parent="reset-request" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#A62C68;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="1" y="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="reset-sync" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FCE8EF;strokeColor=#A62C68;strokeWidth=2;fontSize=14;" value="&lt;b&gt;RESET_SYNC&lt;/b&gt;&lt;br&gt;2 flip-flops&lt;br&gt;Liberacion con clk_50MHz" vertex="1">
+                    <mxGeometry height="100" width="230" x="700" y="500" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-sync-in" parent="reset-sync" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#A62C68;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" y="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="reset-sync-out" parent="reset-sync" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#A62C68;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="0.5" y="1" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="reset-sync-clock-in" parent="reset-sync" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#30364D;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="1" y="0.35" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="reset-baud" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#F0EAFB;strokeColor=#6D4C9A;strokeWidth=2;fontSize=14;" value="&lt;b&gt;BaudRateGen&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="90" width="180" x="580" y="700" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-port-baud" parent="reset-baud" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#A62C68;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="reset-rx" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#E8F1FB;strokeColor=#2F5D8A;strokeWidth=2;fontSize=14;" value="&lt;b&gt;UART_RX&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="90" width="180" x="820" y="700" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-port-rx" parent="reset-rx" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#A62C68;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="reset-interface" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFF4CC;strokeColor=#8A6D1D;strokeWidth=2;fontSize=14;" value="&lt;b&gt;UART_INTERFACE&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="90" width="210" x="1040" y="700" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-port-interface" parent="reset-interface" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#A62C68;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="reset-tx" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FCE8EF;strokeColor=#8F3B5D;strokeWidth=2;fontSize=14;" value="&lt;b&gt;UART_TX&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="90" width="180" x="1310" y="700" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-port-tx" parent="reset-tx" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#A62C68;strokeWidth=2;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" relative="1" width="10" x="0.5" as="geometry">
+                        <mxPoint x="-5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="alu-note" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9CA3AF;dashed=1;fontSize=12;fontColor=#4B5563;" value="La ALU no aparece: es combinacional y no recibe clk, reset ni tick." vertex="1">
+                    <mxGeometry height="25" width="900" x="520" y="810" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-bus" parent="1" style="shape=line;strokeColor=#30364D;strokeWidth=3;" value="" vertex="1">
+                    <mxGeometry height="10" width="850" x="550" y="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-bus-start" parent="1" style="ellipse;html=1;fillColor=#30364D;strokeColor=#30364D;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" width="10" x="545" y="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-junction-baud" parent="1" style="ellipse;html=1;fillColor=#30364D;strokeColor=#30364D;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" width="10" x="665" y="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-junction-rx" parent="1" style="ellipse;html=1;fillColor=#30364D;strokeColor=#30364D;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" width="10" x="905" y="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-junction-interface" parent="1" style="ellipse;html=1;fillColor=#30364D;strokeColor=#30364D;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" width="10" x="1140" y="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-junction-tx" parent="1" style="ellipse;html=1;fillColor=#30364D;strokeColor=#30364D;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" width="10" x="1395" y="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="tick-junction" parent="1" style="ellipse;html=1;fillColor=#16867A;strokeColor=#16867A;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" width="10" x="785" y="340" as="geometry"/>
+                </mxCell>
+                <mxCell id="tick-bus" parent="1" style="shape=line;strokeColor=#16867A;strokeWidth=3;" value="" vertex="1">
+                    <mxGeometry height="10" width="610" x="790" y="400" as="geometry"/>
+                </mxCell>
+                <mxCell id="tick-bus-start" parent="1" style="ellipse;html=1;fillColor=#16867A;strokeColor=#16867A;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" width="10" x="785" y="400" as="geometry"/>
+                </mxCell>
+                <mxCell id="tick-bus-tx" parent="1" style="ellipse;html=1;fillColor=#16867A;strokeColor=#16867A;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" width="10" x="1395" y="400" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-sync-reference" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9CA3AF;dashed=1;fontSize=12;align=center;verticalAlign=middle;" value="&lt;b&gt;clk_50MHz&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#4B5563&quot;&gt;desde Clocking Wizard&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="60" width="170" x="970" y="505" as="geometry"/>
+                </mxCell>
+                <mxCell id="clock-sync-reference-port" parent="clock-sync-reference" style="ellipse;html=1;fillColor=#30364D;strokeColor=#30364D;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="8" relative="1" width="8" y="0.5" as="geometry">
+                        <mxPoint x="-4" y="-4" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="reset-bus" parent="1" style="shape=line;strokeColor=#A62C68;strokeWidth=3;dashed=1;dashPattern=8 6;" value="" vertex="1">
+                    <mxGeometry height="10" width="730" x="670" y="645" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-bus-sync" parent="1" style="ellipse;html=1;fillColor=#A62C68;strokeColor=#A62C68;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" width="10" x="810" y="645" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-junction-baud" parent="1" style="ellipse;html=1;fillColor=#A62C68;strokeColor=#A62C68;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" width="10" x="665" y="645" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-junction-rx" parent="1" style="ellipse;html=1;fillColor=#A62C68;strokeColor=#A62C68;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" width="10" x="905" y="645" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-junction-interface" parent="1" style="ellipse;html=1;fillColor=#A62C68;strokeColor=#A62C68;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" width="10" x="1140" y="645" as="geometry"/>
+                </mxCell>
+                <mxCell id="reset-junction-tx" parent="1" style="ellipse;html=1;fillColor=#A62C68;strokeColor=#A62C68;strokeWidth=1;resizable=0;movable=0;" value="" vertex="1">
+                    <mxGeometry height="10" width="10" x="1395" y="645" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-clock-source" edge="1" parent="1" source="clock-source-port" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#30364D;strokeWidth=2;fontSize=13;labelBackgroundColor=#FFFFFF;" target="wizard-clock-in" value="clk_100MHz">
+                    <mxGeometry relative="1" y="15" as="geometry">
+                        <mxPoint as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="260" y="145"/>
+                            <mxPoint x="260" y="145"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-clock-wizard" edge="1" parent="1" source="wizard-clock-out" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;strokeColor=#30364D;strokeWidth=3;fontSize=13;labelBackgroundColor=#FFFFFF;" target="clock-bus-start" value="clk_50MHz">
+                    <mxGeometry relative="1" x="-0.5455" y="25" as="geometry">
+                        <mxPoint x="-5" y="-15" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="550" y="145"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-clock-baud" edge="1" parent="1" source="clock-junction-baud" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#30364D;strokeWidth=2;" target="clock-port-baud" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-clock-rx" edge="1" parent="1" source="clock-junction-rx" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#30364D;strokeWidth=2;" target="clock-port-rx" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-clock-interface" edge="1" parent="1" source="clock-junction-interface" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#30364D;strokeWidth=2;" target="clock-port-interface" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-clock-tx" edge="1" parent="1" source="clock-junction-tx" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#30364D;strokeWidth=2;" target="clock-port-tx" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-tick-source" edge="1" parent="1" source="tick-port-baud" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;strokeColor=#16867A;strokeWidth=2;fontSize=13;labelBackgroundColor=#FFFFFF;" target="tick-junction" value="baud_tick">
+                    <mxGeometry relative="1" x="1" y="16" as="geometry">
+                        <mxPoint x="5" y="1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-tick-rx" edge="1" parent="1" source="tick-junction" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#16867A;strokeWidth=2;" target="tick-port-rx" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-tick-bus" edge="1" parent="1" source="tick-junction" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;strokeColor=#16867A;strokeWidth=2;" target="tick-bus-start" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-tick-tx" edge="1" parent="1" source="tick-bus-tx" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#16867A;strokeWidth=2;" target="tick-port-tx" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-locked" edge="1" parent="1" source="wizard-locked-out" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 6;strokeColor=#A62C68;strokeWidth=2;fontSize=13;labelBackgroundColor=#FFFFFF;" target="reset-request-locked-in" value="locked">
+                    <mxGeometry relative="1" y="30" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-reset-source" edge="1" parent="1" source="reset-source-port" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 6;strokeColor=#A62C68;strokeWidth=2;fontSize=13;labelBackgroundColor=#FFFFFF;" target="reset-request-reset-in" value="reset">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint y="-12" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-reset-request" edge="1" parent="1" source="reset-request-out" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 6;strokeColor=#A62C68;strokeWidth=2;fontSize=13;labelBackgroundColor=#FFFFFF;" target="reset-sync-in" value="reset_request">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint y="-12" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-reset-sync" edge="1" parent="1" source="reset-sync-out" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;dashed=1;dashPattern=8 6;strokeColor=#A62C68;strokeWidth=3;fontSize=13;labelBackgroundColor=#FFFFFF;" target="reset-bus-sync" value="reset_50MHz">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint y="-12" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-reset-sync-clock" edge="1" parent="1" source="clock-sync-reference-port" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#30364D;strokeWidth=2;" target="reset-sync-clock-in" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-reset-baud" edge="1" parent="1" source="reset-junction-baud" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 6;strokeColor=#A62C68;strokeWidth=2;" target="reset-port-baud" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-reset-rx" edge="1" parent="1" source="reset-junction-rx" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 6;strokeColor=#A62C68;strokeWidth=2;" target="reset-port-rx" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-reset-interface" edge="1" parent="1" source="reset-junction-interface" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 6;strokeColor=#A62C68;strokeWidth=2;" target="reset-port-interface" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-reset-tx" edge="1" parent="1" source="reset-junction-tx" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;dashed=1;dashPattern=8 6;strokeColor=#A62C68;strokeWidth=2;" target="reset-port-tx" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
