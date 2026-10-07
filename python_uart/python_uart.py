@@ -5,11 +5,9 @@
 import serial
 
 
-
 # Configuración UART
 
-
-PORT = "/dev/ttyUSB0"   # CAMBIAR según lo que aparezca
+PORT = "/dev/ttyUSB1"
 BAUDRATE = 19200
 
 
@@ -23,7 +21,6 @@ CMD_OPERATOR   = 0x03
 
 # Opcodes de la ALU
 
-
 OP_ADD = 0b100000
 OP_SUB = 0b100010
 OP_AND = 0b100100
@@ -34,10 +31,23 @@ OP_SRL = 0b000010
 OP_NOR = 0b100111
 
 
+# Diccionario para relacionar nombre -> opcode
+
+OPERATIONS = {
+    "ADD": OP_ADD,
+    "SUB": OP_SUB,
+    "AND": OP_AND,
+    "OR":  OP_OR,
+    "XOR": OP_XOR,
+    "SRA": OP_SRA,
+    "SRL": OP_SRL,
+    "NOR": OP_NOR
+}
+
+
 # Funcion para enviar un byte
 
 def send_byte(ser, value):
-
     ser.write(bytes([value]))
 
 
@@ -69,7 +79,6 @@ def operation_ALU(ser, operator, a, b):
     return response[0]
 
 
-
 def main():
 
     ser = serial.Serial(
@@ -83,30 +92,85 @@ def main():
 
     try:
 
-        A = 5
-        B = 3
+        # ==========================================
+        # Ingreso de datos
+        # ==========================================
+
+        A = int(input("Ingrese A (0-255): "))
+
+        operation = input(
+            "Ingrese operacion "
+            "[ADD, SUB, AND, OR, XOR, NOR, SRA, SRL]: "
+        ).upper()
+
+        B = int(input("Ingrese B (0-255): "))
+
+
+        # ==========================================
+        # Validaciones
+        # ==========================================
+
+        if A < 0 or A > 255:
+            print("ERROR: A debe estar entre 0 y 255")
+            return
+
+        if B < 0 or B > 255:
+            print("ERROR: B debe estar entre 0 y 255")
+            return
+
+        if operation not in OPERATIONS:
+            print("ERROR: operacion invalida")
+            return
+
+
+        # Buscamos opcode correspondiente
+        opcode = OPERATIONS[operation]
+
+
+        # ==========================================
+        # Ejecutar operación en la FPGA
+        # ==========================================
 
         result = operation_ALU(
             ser,
-            OP_ADD,
+            opcode,
             A,
             B
         )
 
-        print(f"A = {A}")
-        print(f"B = {B}")
-        print("Operacion = ADD")
+        print()
+        print("==============================")
+        print(f"A         = {A:3d} ({A:08b})")
+        print(f"Operacion = {operation}")
+        print(f"B         = {B:3d} ({B:08b})")
+        print("------------------------------")
+        print(f"Resultado = {result:3d} ({result:08b})")
+        print("==============================")
 
-        print(
-            f"Resultado recibido = {result}"
-        )
 
-        if result == 8:
-            print("TEST OK")
-        else:
-            print(
-                f"TEST ERROR: esperado 8, recibido {result}"
-            )
+        # ==========================================
+        # Mostrar resultado
+        # ==========================================
+
+        print()
+        print("==========================")
+        print(f"A         = {A}")
+        print(f"Operacion = {operation}")
+        print(f"B         = {B}")
+        print("--------------------------")
+        print(f"Resultado = {result}")
+        print("==========================")
+
+
+    except ValueError:
+
+        print("ERROR: A y B deben ser numeros enteros")
+
+
+    except TimeoutError as error:
+
+        print(f"ERROR: {error}")
+
 
     finally:
 
