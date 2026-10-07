@@ -1,0 +1,6 @@
+-always-comb
+-explicit-parameter-storage-type
+-explicit-task-lifetime
+-no-trailing-spaces
+-parameter-name-style
+-posix-eof
