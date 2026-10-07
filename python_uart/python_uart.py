@@ -1,117 +1,101 @@
-#ls -l /dev/ttyUSB*
-#sudo dmesg | tail -n 50
-#python3 -m serial.tools.list_ports -v
-
+import sys
 import serial
 
-
-
-# Configuración UART
-
-
-PORT = "/dev/ttyUSB0"   # CAMBIAR según lo que aparezca
+# Configuracion del puerto serie en Linux
 BAUDRATE = 19200
+# Ajustar segun: python3 -m serial.tools.list_ports -v
+SERIAL_PORT = "/dev/ttyUSB0"
 
+OPCODES = {
+    'ADD': 0x20,
+    'SUB': 0x22,
+    'AND': 0x24,
+    'OR':  0x25,
+    'XOR': 0x26,
+    'NOR': 0x27,
+    'SRA': 0x03,
+    'SRL': 0x02
+}
 
-# Comandos de la Interface
+EXIT_COMMANDS = {'q', 'e'}
 
-CMD_DATA_A     = 0x00
-CMD_DATA_B     = 0x01
-CMD_GET_RESULT = 0x02
-CMD_OPERATOR   = 0x03
-
-
-# Opcodes de la ALU
-
-
-OP_ADD = 0b100000
-OP_SUB = 0b100010
-OP_AND = 0b100100
-OP_OR  = 0b100101
-OP_XOR = 0b100110
-OP_SRA = 0b000011
-OP_SRL = 0b000010
-OP_NOR = 0b100111
-
-
-# Funcion para enviar un byte
-
-def send_byte(ser, value):
-
-    ser.write(bytes([value]))
-
-
-# Funcion para ejecutar una operacion de ALU
-
-def operation_ALU(ser, operator, a, b):
-
-    # Enviar operador
-    send_byte(ser, CMD_OPERATOR)
-    send_byte(ser, operator)
-
-    # Enviar A
-    send_byte(ser, CMD_DATA_A)
-    send_byte(ser, a)
-
-    # Enviar B
-    send_byte(ser, CMD_DATA_B)
-    send_byte(ser, b)
-
-    # Pedir resultado
-    send_byte(ser, CMD_GET_RESULT)
-
-    # Esperar 1 byte de respuesta
-    response = ser.read(1)
-
-    if len(response) == 0:
-        raise TimeoutError("La FPGA no respondió")
-
-    return response[0]
-
-
-
-def main():
-
-    ser = serial.Serial(
-        port=PORT,
-        baudrate=BAUDRATE,
-        bytesize=serial.EIGHTBITS,
-        parity=serial.PARITY_NONE,
-        stopbits=serial.STOPBITS_ONE,
-        timeout=1
-    )
-
-    try:
-
-        A = 5
-        B = 3
-
-        result = operation_ALU(
-            ser,
-            OP_ADD,
-            A,
-            B
-        )
-
-        print(f"A = {A}")
-        print(f"B = {B}")
-        print("Operacion = ADD")
-
-        print(
-            f"Resultado recibido = {result}"
-        )
-
-        if result == 8:
-            print("TEST OK")
-        else:
-            print(
-                f"TEST ERROR: esperado 8, recibido {result}"
+class SerialPortControl:
+    def __init__(self) -> None:
+        try:
+            self.serial_port = serial.Serial(
+                port=SERIAL_PORT,
+                baudrate=BAUDRATE,
+                bytesize=serial.EIGHTBITS,
+                parity=serial.PARITY_NONE,
+                stopbits=serial.STOPBITS_ONE,
+                timeout=1,
+                xonxoff=False,
+                rtscts=False,
+                dsrdtr=False,
             )
+        except serial.SerialException as e:
+            print(f"Error al abrir el puerto serie: {e}")
+            sys.exit(1)
 
-    finally:
+    def send_serial_data(self) -> None:
+        # Mostrar mensajes de advertencia al usuario
+        print("----------------------------------------------")
+        print("Recordar presionar el botón de reset en placa antes de comenzar.")
+        print("Revisar el dispositivo serie configurado.")
+        print("----------------------------------------------")
 
-        ser.close()
+        while True:
+            operand1 = self.get_operand("Ingrese el primer byte de datos: ")
+            operand2 = self.get_operand("Ingrese el segundo byte de datos: ")
+            operation = self.get_operation()
 
+            self.send_data(operation, operand1, operand2)
+            self.receive_result()
+
+    def get_operand(self, prompt: str) -> int:
+        while True:
+            operand_str: str = input(f'{prompt}').lower()
+            if operand_str in EXIT_COMMANDS:
+                self.exit_program()
+
+            if len(operand_str) == 8 and all(c in '01' for c in operand_str):
+                operand = int(operand_str, 2)
+                if operand & 0x80:
+                    operand -= 256
+                return operand & 0xFF
+
+            print('Error: por favor ingrese un numero binario de 8 bits.')
+
+    def get_operation(self) -> int:
+        while True:
+            operation: str = input('Ingrese la operacion ... ADD, SUB, AND, OR, XOR, NOR, SRA, SRL : ').lower()
+            if operation in EXIT_COMMANDS:
+                self.exit_program()
+
+            if operation.upper() in OPCODES:
+                return OPCODES[operation.upper()]
+
+            print('Operacion invalida')
+
+    def send_data(self, operation: int, operand1: int, operand2: int) -> None:
+        data_to_send: bytes = bytes([operand1, operand2, operation])
+        self.serial_port.write(data_to_send)
+
+    def receive_result(self) -> None:
+        received_data: bytes = self.serial_port.read(1)
+        if len(received_data) == 1:
+            result: int = int.from_bytes(received_data, byteorder='big', signed=True)
+            binary_result: str = f'{result & 0xFF:08b}'
+            print(f'Resultado: {binary_result} ({result})')
+        else:
+            print('Error de recepcion: ningun dato recibido')
+
+    def exit_program(self) -> None:
+        print('Saliendo...')
+        self.serial_port.close()
+        sys.exit()
 
 if __name__ == "__main__":
-    main()
+    app = SerialPortControl()
+    app.send_serial_data()  # Ejecutar operaciones hasta ingresar un comando de salida
+
